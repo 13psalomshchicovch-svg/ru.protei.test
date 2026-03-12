@@ -41,10 +41,6 @@ public class LoginTests {
         Attach.screenshotAs(driver,"Финальное состояние страницы");
         Attach.pageSource(driver);
         Attach.browserConsoleLogs(driver);
-    }
-
-    @AfterEach
-    void tearDown() {
         if (driver != null) driver.quit();
     }
 
@@ -77,7 +73,7 @@ public class LoginTests {
     public void unsuccessfulLoginWithWrongPassword() {
 
         step("Ввод корректного email и неверного пароля",()-> {
-            loginPage.login("test@protei.ru", "123");;
+            loginPage.login("test@protei.ru", "123");
         });
         step("Проверка сообщения об ошибке 'Неверный E-Mail или пароль'",()-> {
             assertEquals("Неверный E-Mail или пароль",loginPage.getErrorMessageText());

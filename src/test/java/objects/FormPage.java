@@ -74,6 +74,7 @@ public class FormPage {
 
     public FormPage fillEmail(String email) {
         emailDataField.clear();
+        if(email != null)
         emailDataField.sendKeys(email);
         return this;
     }

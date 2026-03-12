@@ -11,11 +11,12 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 
 import static io.qameta.allure.Allure.step;
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -32,7 +33,7 @@ public class FormTests {
         driver = new WebDriverProvider().get();
         formPage = new FormPage(driver);
 
-        step("Вход на страницу формы для заполнения",()->{
+        step("Открытие страницы формы для заполнения",()->{
             formPage.open();
             formPage.entry();
         });
@@ -40,22 +41,18 @@ public class FormTests {
     }
 
     @AfterEach
-    void tearDown() {
-        if (driver != null) driver.quit();
-    }
-
-    @AfterEach
     void backLogs() {
-        Attach.screenshotAs(driver,"Last screenshot");
+        Attach.screenshotAs(driver,"Финальное состояние страницы");
         Attach.pageSource(driver);
         Attach.browserConsoleLogs(driver);
+        if (driver != null) driver.quit();
     }
 
     @Test
     @DisplayName("Минимально заполненная форма")
     void minimalValidFields() throws InterruptedException {
 
-        step("Заполнение полей E-Mail, имя и пол",()->{
+        step("Заполнение полей E-mail, имени и пола",()->{
             formPage.fillEmail("1test@example.com")
                     .fillName("Иван")
                     .selectGender("Мужской");
@@ -65,16 +62,16 @@ public class FormTests {
             formPage.addDataInRow();
         });
 
-        step("Проверка соответсвия добавленых данных",()->{
+        step("Проверка соответствия добавленных данных в таблице",()->{
             assertTrue(formPage.checkAddedDataInRow("test@example.com", "Иван", "Мужской",0));
         });
     }
 
     @Test
-    @DisplayName("Полное заполнение всех полей")
+    @DisplayName("Заполнение всех полей в форме")
     void fullFormWithAllFields() {
 
-        step("Заполнение полей E-Mail, имя, пол, checkbox и radioButton",()->{
+        step("Заполнение полей E-mail, имени, пола, выбор чекбоксов и радиокнопки",()->{
             formPage.fillEmail("anna.kovalenko@gmail.com")
                     .fillName("Анна Коваленко")
                     .selectGender("Женский")
@@ -87,17 +84,24 @@ public class FormTests {
             formPage.addDataInRow();
         });
 
-        step("Проверка соответсвия добавленых данных",()->{
+        step("Проверка соответствия добавленных данных в таблице",()->{
             assertTrue(formPage.checkAddedDataInRow("anna.kovalenko@gmail.com", "Анна Коваленко", "Женский", 1));
         });
     }
 
-    @Test
-    @DisplayName("Заполнение формы без E-Mail")
-    void emptyEmailNotSubmitted() throws InterruptedException {
+    @CsvSource({
+            "Заполнение формы без E-Mail, ",
+            "Некорректный формат E-Mail, not-an-email"
+    })
+    @ParameterizedTest(name = "{0}")
+    void emptyEmailNotSubmitted(
+            String nameTest,
+            String email
+    ) throws InterruptedException {
 
-        step("Заполнение полей имя, пол и radioButton. Без E-Mail",()->{
-            formPage.fillName("Пётр")
+        step("Заполнение полей E-mail, имени, пола и радиокнопки. Невалидное значение E-mail",()->{
+            formPage.fillEmail(email)
+                    .fillName("Пётр")
                     .selectGender("Мужской")
                     .radioSelect(2);
         });
@@ -106,36 +110,17 @@ public class FormTests {
             formPage.addDataInRow();
         });
 
-        step("Проверка правильно выведеной ошибке в pop-up окне - Неверный формат E-Mail",()->{
+        step("Проверка правильно выведенной ошибки в pop-up окне — Неверный формат E-mail",()->{
             assertEquals("Неверный формат E-Mail", formPage.isErrorMessageShown());
         });
     }
 
-    @Test
-    @DisplayName("Некорректный формат E-Mail")
-    void invalidEmailFormat() {
-
-        step("Заполнение полей E-Mail, имя, пол и radioButton. Не валидное значение E-Mail",()->{
-            formPage.fillEmail("not-an-email")
-                    .fillName("Сергей")
-                    .selectGender("Мужской")
-                    .radioSelect(1);
-        });
-
-        step("Добавление данных в таблицу",()->{
-            formPage.addDataInRow();
-        });
-
-        step("Проверка правильно выведеной ошибке в pop-up окне - Неверный формат E-Mail",()->{
-            assertEquals("Неверный формат E-Mail", formPage.isErrorMessageShown());
-        });
-    }
 
     @Test
-    @DisplayName("Пустое поле Имя")
+    @DisplayName("Пустое имя не отправляется")
     void emptyNameNotSubmitted() {
 
-        step("Заполнение полей E-Mail и пол. Без имени",()->{
+        step("Заполнение полей E-mail и пола с пустым полем имени",()->{
             formPage.fillEmail("no_name@test.ru")
                     .selectGender("Женский");
         });
@@ -144,7 +129,7 @@ public class FormTests {
             formPage.addDataInRow();
         });
 
-        step("Проверка правильно выведеной ошибке в pop-up окне - Поле имя не может быть пустым",()->{
+        step("Проверка правильно выведенной ошибки в pop-up окне — Поле имя не может быть пустым",()->{
             assertEquals("Поле имя не может быть пустым", formPage.isErrorMessageShown());
         });
     }
