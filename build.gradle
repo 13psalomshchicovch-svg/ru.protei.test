@@ -31,7 +31,6 @@ dependencies {
     testImplementation (
 
             "org.junit.jupiter:junit-jupiter:5.14.3",
-            'com.codeborne:selenide:7.14.0',
             'org.slf4j:slf4j-simple:2.0.15',
             'io.github.bonigarcia:webdrivermanager:6.3.3',
             'org.aeonbits.owner:owner:1.0.12',
