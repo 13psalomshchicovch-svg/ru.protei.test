@@ -31,14 +31,14 @@ public class LoginTests {
         SelenideLogger.addListener("allure", new AllureSelenide());
         driver = new WebDriverProvider().get();
         loginPage = new LoginPage(driver);
-        step("Вход на страницу авторизации",()-> {
+        step("Открытие страницы авторизации",()-> {
             loginPage.open();
         });
     }
 
     @AfterEach
     void backLogs(){
-        Attach.screenshotAs(driver,"Last screenshot");
+        Attach.screenshotAs(driver,"Финальное состояние страницы");
         Attach.pageSource(driver);
         Attach.browserConsoleLogs(driver);
     }
@@ -49,37 +49,37 @@ public class LoginTests {
     }
 
     @Test
-    @DisplayName("Позитивный тест авторизации для входа в форму")
+    @DisplayName("Успешная авторизация с корректными данными")
     public void successfulLogin() {
 
-        step("Ввод корректные данные для авторизации",()-> {
+        step("Ввод корректных учетных данных",()-> {
             loginPage.login("test@protei.ru", "test");
         });
-        step("Проверка корректно выведенной ошибки 'Неверный E-Mail или пароль'",()-> {
+        step("Проверка успешного входа",()-> {
             assertTrue(loginPage.isLoginSuccess());
         });
     }
 
     @Test
-    @DisplayName("Неверный E-Mail - Неверный формат E-Mail")
+    @DisplayName("Ошибка 'Неверный формат E-Mail' при вводе некорректного email")
     public void unsuccessfulLoginWithWrongEmail() {
 
-        step("Ввод данных для входа с другим E-Mail",()-> {
+        step("Ввод некорректного email",()-> {
             loginPage.login("test", "123");
         });
-        step("Проверка корректно выведенной ошибки 'Неверный формат E-Mail'",()-> {
+        step("Проверка сообщения об ошибке 'Неверный формат E-Mail'",()-> {
             assertEquals("Неверный формат E-Mail",loginPage.getErrorMessageText());
         });
     }
 
     @Test
-    @DisplayName("Не правильный пароль - Неверный E-Mail или пароль")
+    @DisplayName("При вводе неверного пароля отображается ошибка 'Неверный E-Mail или пароль'")
     public void unsuccessfulLoginWithWrongPassword() {
 
-        step("Ввод данных для входа с верным E-Mail и не правильным паролем",()-> {
+        step("Ввод корректного email и неверного пароля",()-> {
             loginPage.login("test@protei.ru", "123");;
         });
-        step("Проверка корректно выведенной ошибки 'Неверный E-Mail или пароль'",()-> {
+        step("Проверка сообщения об ошибке 'Неверный E-Mail или пароль'",()-> {
             assertEquals("Неверный E-Mail или пароль",loginPage.getErrorMessageText());
         });
     }
