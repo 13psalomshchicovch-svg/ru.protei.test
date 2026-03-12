@@ -1,0 +1,54 @@
+plugins {
+    id 'java'
+    id 'io.qameta.allure' version '3.0.2'
+}
+
+group = 'io.mastermide.testing.autotesting'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+allure {
+    report{
+        version.set("2.32.0")
+    }
+    adapter { // отвечает за появление и создание backlog в allure-results
+        aspectjWeaver.set(true)
+        frameworks{
+            junit5{
+                adapterVersion.set("2.32.0")
+            }
+        }
+    }
+}
+
+dependencies {
+
+    implementation("io.qameta.allure:allure-selenide:2.32.0")
+
+    testImplementation (
+
+            "org.junit.jupiter:junit-jupiter:5.14.3",
+            'com.codeborne:selenide:7.14.0',
+            'org.slf4j:slf4j-simple:2.0.15',
+            'io.github.bonigarcia:webdrivermanager:6.3.3',
+            'org.aeonbits.owner:owner:1.0.12',
+            'org.assertj:assertj-core:3.27.7'
+
+    )
+
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+
+}
+
+test {
+    useJUnitPlatform()
+    systemProperties(System.getProperties())
+}
+
+
+
+
