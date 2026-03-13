@@ -24,8 +24,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @Link("Here is Jira link")
 public class FormTests {
 
-    WebD
-
     WebDriver driver;
     FormPage formPage;
 

@@ -24,12 +24,13 @@ allure {
     }
 }
 
+
 dependencies {
 
     implementation("io.qameta.allure:allure-selenide:2.32.0")
 
     testImplementation (
-
+            'com.codeborne:selenide:7.14.0',
             "org.junit.jupiter:junit-jupiter:5.14.3",
             'org.slf4j:slf4j-simple:2.0.15',
             'io.github.bonigarcia:webdrivermanager:6.3.3',

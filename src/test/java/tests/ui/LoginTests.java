@@ -1,6 +1,8 @@
 package tests.ui;
 
 
+import com.codeborne.selenide.logevents.SelenideLogger;
+import org.openqa.selenium.WebDriver;
 import tests.ui.config.WebDriverProvider;
 
 import tests.ui.hellper.Attach;
