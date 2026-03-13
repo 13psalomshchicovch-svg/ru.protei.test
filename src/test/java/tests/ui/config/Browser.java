@@ -1,4 +1,4 @@
-package config;
+package tests.ui.config;
 
 public enum Browser {
     CHROME,

@@ -1,7 +1,6 @@
-package config;
+package tests.ui.config;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
-import objects.LoginPage;
 import org.aeonbits.owner.ConfigFactory;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;

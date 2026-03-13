@@ -1,20 +1,17 @@
-package tests;
+package tests.ui;
 
-import com.codeborne.selenide.logevents.SelenideLogger;
-import config.WebDriverProvider;
 
-import hellper.Attach;
+import tests.ui.config.WebDriverProvider;
+
+import tests.ui.hellper.Attach;
 import io.qameta.allure.*;
 import io.qameta.allure.selenide.AllureSelenide;
-import objects.LoginPage;
+import tests.ui.objects.LoginPage;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtensionContext;
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.TakesScreenshot;
-import org.openqa.selenium.WebDriver;
+
 
 import static io.qameta.allure.Allure.step;
 import static org.junit.jupiter.api.Assertions.*;

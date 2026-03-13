@@ -1,12 +1,12 @@
-package tests;
+package tests.ui;
 
 import com.codeborne.selenide.logevents.SelenideLogger;
-import config.WebDriverProvider;
-import hellper.Attach;
+import tests.ui.config.WebDriverProvider;
+import tests.ui.hellper.Attach;
 import io.qameta.allure.Link;
 import io.qameta.allure.Owner;
 import io.qameta.allure.selenide.AllureSelenide;
-import objects.FormPage;
+import tests.ui.objects.FormPage;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -23,6 +23,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @Owner("13ko31")
 @Link("Here is Jira link")
 public class FormTests {
+
+    WebD
 
     WebDriver driver;
     FormPage formPage;

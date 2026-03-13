@@ -1,4 +1,4 @@
-package hellper;
+package tests.ui.hellper;
 
 import io.qameta.allure.Attachment;
 import org.openqa.selenium.OutputType;

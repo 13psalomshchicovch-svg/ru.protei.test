@@ -34,7 +34,8 @@ dependencies {
             'org.slf4j:slf4j-simple:2.0.15',
             'io.github.bonigarcia:webdrivermanager:6.3.3',
             'org.aeonbits.owner:owner:1.0.12',
-            'org.assertj:assertj-core:3.27.7'
+            'org.assertj:assertj-core:3.27.7',
+            'org.seleniumhq.selenium:selenium-java:4.41.0'
 
     )
 
@@ -47,7 +48,3 @@ test {
     useJUnitPlatform()
     systemProperties(System.getProperties())
 }
-
-
-
-
